@@ -70,7 +70,7 @@ Durante la preparación se realizaron los siguientes pasos:
 - Revisión de `Aeronave`, `Fecha UTC` y `Hora UTC`.
 - Eliminación de variables que quedaron constantes después de aplicar los filtros.
 
-Después de seleccionar los vuelos regulares domésticos quedaron **256.624 registros**.
+Después de seleccionar los vuelos regulares domésticos quedaron **265.624 registros**.
 
 Al utilizar solamente los despegues quedaron **132.846 registros**.
 
@@ -83,12 +83,12 @@ Finalmente, después de eliminar 8 registros duplicados exactos, el dataset prep
 
 | Variable | Tipo de dato |
 |---|---|
-| `Fecha UTC` | `object` |
-| `Hora UTC` | `object` |
-| `Aeropuerto` | `object` |
-| `Origen / Destino` | `object` |
-| `Aerolinea Nombre` | `object` |
-| `Aeronave` | `object` |
+| `Fecha UTC` | `str` |
+| `Hora UTC` | `str` |
+| `Aeropuerto` | `str` |
+| `Origen / Destino` | `str` |
+| `Aerolinea Nombre` | `str` |
+| `Aeronave` | `str` |
 | `Pasajeros` | `float64` |
 
 ### Variables consideradas como posibles predictoras
