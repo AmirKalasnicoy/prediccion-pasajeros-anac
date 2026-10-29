@@ -16,18 +16,18 @@ https://datos.transporte.gob.ar/dataset/aterrizajes-y-despegues-procesados-por-l
 
 | Variable | Tipo de dato | Descripción |
 |---|---|---|
-| `Fecha UTC` | `object` | Fecha en la que se registró la operación aérea, expresada en horario UTC. |
-| `Hora UTC` | `object` | Hora de la operación expresada en UTC. |
-| `Clase de Vuelo (todos los vuelos)` | `object` | Categoría del vuelo, como Regular, No Regular, Vuelo Escuela, entre otras. |
-| `Clasificación Vuelo` | `object` | Indica si el vuelo es doméstico o internacional. |
-| `Tipo de Movimiento` | `object` | Indica si el registro corresponde a un despegue o un aterrizaje. |
-| `Aeropuerto` | `object` | Código del aeropuerto donde se registra la operación. |
-| `Origen / Destino` | `object` | Código del aeropuerto relacionado con el origen o destino de la operación. |
-| `Aerolinea Nombre` | `object` | Nombre de la aerolínea que realiza la operación. |
-| `Aeronave` | `object` | Código utilizado para identificar el fabricante y modelo de la aeronave. |
+| `Fecha UTC` | `str` | Fecha en la que se registró la operación aérea, expresada en horario UTC. |
+| `Hora UTC` | `str` | Hora de la operación expresada en UTC. |
+| `Clase de Vuelo (todos los vuelos)` | `str` | Categoría del vuelo, como Regular, No Regular, Vuelo Escuela, entre otras. |
+| `Clasificación Vuelo` | `str` | Indica si el vuelo es doméstico o internacional. |
+| `Tipo de Movimiento` | `str` | Indica si el registro corresponde a un despegue o un aterrizaje. |
+| `Aeropuerto` | `str` | Código del aeropuerto donde se registra la operación. |
+| `Origen / Destino` | `str` | Código del aeropuerto relacionado con el origen o destino de la operación. |
+| `Aerolinea Nombre` | `str` | Nombre de la aerolínea que realiza la operación. |
+| `Aeronave` | `str` | Código utilizado para identificar el fabricante y modelo de la aeronave. |
 | `Pasajeros` | `float64` | Cantidad de pasajeros correspondiente a una operación aérea. |
 | `PAX` | `float64` | Variable relacionada con la cantidad de pasajeros de cabotaje. |
-| `Calidad dato` | `object` | Indica la condición o calidad del registro publicado. |
+| `Calidad dato` | `str` | Indica la condición o calidad del registro publicado. |
 
 ## Variable objetivo
 
@@ -39,7 +39,7 @@ La predicción se plantea para realizarse antes de la salida del vuelo, por lo q
 
 Como el proyecto está enfocado en vuelos regulares de cabotaje, se seleccionaron únicamente los registros cuya clase de vuelo es `Regular` y cuya clasificación es `Doméstico`.
 
-Después de este filtro quedaron **256.624 registros**.
+Después de este filtro quedaron **265.624 registros**.
 
 También se revisó la forma en la que ANAC registra los movimientos. Para los vuelos de cabotaje aparecen registros de despegue y aterrizaje, por lo que mantener ambos podría representar dos veces una misma operación.
 
@@ -102,12 +102,12 @@ El dataset preparado quedó formado por **132.838 registros y 7 columnas**:
 
 | Variable | Tipo de dato |
 |---|---|
-| `Fecha UTC` | `object` |
-| `Hora UTC` | `object` |
-| `Aeropuerto` | `object` |
-| `Origen / Destino` | `object` |
-| `Aerolinea Nombre` | `object` |
-| `Aeronave` | `object` |
+| `Fecha UTC` | `str` |
+| `Hora UTC` | `str` |
+| `Aeropuerto` | `str` |
+| `Origen / Destino` | `str` |
+| `Aerolinea Nombre` | `str` |
+| `Aeronave` | `str` |
 | `Pasajeros` | `float64` |
 
 Una observación del conjunto preparado representa un registro de despegue correspondiente a una operación regular de cabotaje publicada por ANAC, luego de aplicar los filtros y eliminar duplicados exactos.
