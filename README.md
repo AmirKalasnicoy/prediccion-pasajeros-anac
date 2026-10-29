@@ -81,15 +81,15 @@ Finalmente, después de eliminar 8 registros duplicados exactos, el dataset prep
 
 ## Variables del dataset preparado
 
-Las variables que quedaron en el conjunto procesado son:
-
-- `Fecha UTC`
-- `Hora UTC`
-- `Aeropuerto`
-- `Origen / Destino`
-- `Aerolinea Nombre`
-- `Aeronave`
-- `Pasajeros`
+| Variable | Tipo de dato |
+|---|---|
+| `Fecha UTC` | `object` |
+| `Hora UTC` | `object` |
+| `Aeropuerto` | `object` |
+| `Origen / Destino` | `object` |
+| `Aerolinea Nombre` | `object` |
+| `Aeronave` | `object` |
+| `Pasajeros` | `float64` |
 
 ### Variables consideradas como posibles predictoras
 
@@ -145,7 +145,7 @@ prediccion-pasajeros-anac/
 ├── docs/
 │   └── descripcion_dataset.md
 │
-├── notebook/
+├── notebooks/
 │   └── preparacion_datos_anac_2025.ipynb
 │
 └── README.md
@@ -155,7 +155,7 @@ prediccion-pasajeros-anac/
 
 - **Dataset original:** `data/raw/informe-ministerio-actualizado-dic-final.csv`
 - **Dataset procesado:** `data/processed/vuelos_regulares_cabotaje_2025_procesado.csv`
-- **Notebook de preparación:** `notebook/preparacion_datos_anac_2025.ipynb`
+- **Notebook de preparación:** `notebooks/preparacion_datos_anac_2025.ipynb`
 - **Descripción del dataset:** `docs/descripcion_dataset.md`
 
 ## Fuente de los datos
@@ -165,3 +165,7 @@ Los datos provienen del portal de Datos Abiertos de la Secretaría de Transporte
 Dataset utilizado: **Aterrizajes y despegues procesados por la Administración Nacional de Aviación Civil**.
 
 Período utilizado: **2025**.
+
+Enlace oficial al dataset:
+
+https://datos.transporte.gob.ar/dataset/aterrizajes-y-despegues-procesados-por-la-administracion-nacional-de-aviacion-civil-anac/archivo/0706775f-bed9-46e7-aac5-726d7e72e429

@@ -8,24 +8,26 @@ Los datos provienen del portal de Datos Abiertos de la Secretaría de Transporte
 
 El dataset original contiene **597.784 registros y 12 columnas**.
 
+Enlace oficial al dataset:
+
+https://datos.transporte.gob.ar/dataset/aterrizajes-y-despegues-procesados-por-la-administracion-nacional-de-aviacion-civil-anac/archivo/0706775f-bed9-46e7-aac5-726d7e72e429
+
 ## Variables originales
 
-Las variables disponibles inicialmente son:
-
-| Variable | Descripción |
-|---|---|
-| `Fecha UTC` | Fecha en la que se registró la operación aérea, expresada en horario UTC. |
-| `Hora UTC` | Hora de la operación expresada en UTC. |
-| `Clase de Vuelo (todos los vuelos)` | Categoría del vuelo, como Regular, No Regular, Vuelo Escuela, entre otras. |
-| `Clasificación Vuelo` | Indica si el vuelo es doméstico o internacional. |
-| `Tipo de Movimiento` | Indica si el registro corresponde a un despegue o un aterrizaje. |
-| `Aeropuerto` | Código del aeropuerto donde se registra la operación. |
-| `Origen / Destino` | Código del aeropuerto relacionado con el origen o destino de la operación. |
-| `Aerolinea Nombre` | Nombre de la aerolínea que realiza la operación. |
-| `Aeronave` | Código utilizado para identificar el fabricante y modelo de la aeronave. |
-| `Pasajeros` | Cantidad de pasajeros correspondiente a una operación aérea. |
-| `PAX` | Variable relacionada con la cantidad de pasajeros de cabotaje. |
-| `Calidad dato` | Indica la condición o calidad del registro publicado. |
+| Variable | Tipo de dato | Descripción |
+|---|---|---|
+| `Fecha UTC` | `object` | Fecha en la que se registró la operación aérea, expresada en horario UTC. |
+| `Hora UTC` | `object` | Hora de la operación expresada en UTC. |
+| `Clase de Vuelo (todos los vuelos)` | `object` | Categoría del vuelo, como Regular, No Regular, Vuelo Escuela, entre otras. |
+| `Clasificación Vuelo` | `object` | Indica si el vuelo es doméstico o internacional. |
+| `Tipo de Movimiento` | `object` | Indica si el registro corresponde a un despegue o un aterrizaje. |
+| `Aeropuerto` | `object` | Código del aeropuerto donde se registra la operación. |
+| `Origen / Destino` | `object` | Código del aeropuerto relacionado con el origen o destino de la operación. |
+| `Aerolinea Nombre` | `object` | Nombre de la aerolínea que realiza la operación. |
+| `Aeronave` | `object` | Código utilizado para identificar el fabricante y modelo de la aeronave. |
+| `Pasajeros` | `float64` | Cantidad de pasajeros correspondiente a una operación aérea. |
+| `PAX` | `float64` | Variable relacionada con la cantidad de pasajeros de cabotaje. |
+| `Calidad dato` | `object` | Indica la condición o calidad del registro publicado. |
 
 ## Variable objetivo
 
@@ -98,13 +100,15 @@ Como estas variables ya no presentan variación y no aportarían información pa
 
 El dataset preparado quedó formado por **132.838 registros y 7 columnas**:
 
-- `Fecha UTC`
-- `Hora UTC`
-- `Aeropuerto`
-- `Origen / Destino`
-- `Aerolinea Nombre`
-- `Aeronave`
-- `Pasajeros`
+| Variable | Tipo de dato |
+|---|---|
+| `Fecha UTC` | `object` |
+| `Hora UTC` | `object` |
+| `Aeropuerto` | `object` |
+| `Origen / Destino` | `object` |
+| `Aerolinea Nombre` | `object` |
+| `Aeronave` | `object` |
+| `Pasajeros` | `float64` |
 
 Una observación del conjunto preparado representa un registro de despegue correspondiente a una operación regular de cabotaje publicada por ANAC, luego de aplicar los filtros y eliminar duplicados exactos.
 
@@ -114,4 +118,4 @@ El dataset queda preparado para continuar con la selección definitiva de variab
 
 - Dataset original: `data/raw/informe-ministerio-actualizado-dic-final.csv`
 - Dataset procesado: `data/processed/vuelos_regulares_cabotaje_2025_procesado.csv`
-- Notebook de preparación: `notebook/preparacion_datos_anac_2025.ipynb`
+- Notebook de preparación: `notebooks/preparacion_datos_anac_2025.ipynb`
