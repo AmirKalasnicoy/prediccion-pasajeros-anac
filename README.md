@@ -136,20 +136,33 @@ La elección definitiva del modelo se realizará más adelante, en la etapa de m
 prediccion-pasajeros-anac/
 │
 ├── data/
-│   ├── raw/
-│   │   └── informe-ministerio-actualizado-dic-final.csv
-│   │
-│   └── processed/
-│       └── vuelos_regulares_cabotaje_2025_procesado.csv
+│   ├── external/            <- Datos externos, si fueran necesarios
+│   ├── interim/             <- Datos intermedios del procesamiento
+│   ├── processed/
+│   │   └── vuelos_regulares_cabotaje_2025_procesado.csv
+│   └── raw/
+│       └── informe-ministerio-actualizado-dic-final.csv
 │
 ├── docs/
 │   └── descripcion_dataset.md
 │
+├── models/                  <- Modelos entrenados en etapas posteriores
 ├── notebooks/
 │   └── preparacion_datos_anac_2025.ipynb
+├── prediccion_pasajeros_anac/
+│   └── __init__.py
+├── references/              <- Material de referencia del proyecto
+├── reports/
+│   └── figures/             <- Gráficos y figuras generadas
 │
+├── .gitignore
+├── Makefile
+├── pyproject.toml
+├── requirements.txt
 └── README.md
 ```
+
+La estructura del repositorio sigue la organización de **Cookiecutter Data Science**. Algunas carpetas, como `external`, `interim`, `models`, `references` y `reports/figures`, quedan preparadas para usarse cuando el proyecto las necesite.
 
 ## Archivos principales
 
@@ -157,6 +170,8 @@ prediccion-pasajeros-anac/
 - **Dataset procesado:** `data/processed/vuelos_regulares_cabotaje_2025_procesado.csv`
 - **Notebook de preparación:** `notebooks/preparacion_datos_anac_2025.ipynb`
 - **Descripción del dataset:** `docs/descripcion_dataset.md`
+- **Dependencias del proyecto:** `requirements.txt`
+- **Configuración del proyecto:** `pyproject.toml`
 
 ## Fuente de los datos
 
