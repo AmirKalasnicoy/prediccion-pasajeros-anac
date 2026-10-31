@@ -1,0 +1,20 @@
+[build-system]
+requires = ["flit_core >=3.2,<4"]
+build-backend = "flit_core.buildapi"
+
+[project]
+name = "prediccion_pasajeros_anac"
+version = "0.0.1"
+description = "Predicción de pasajeros en vuelos regulares de cabotaje en Argentina"
+authors = [
+  { name = "Amir Kalasnicoy" },
+]
+readme = "README.md"
+requires-python = ">=3.10"
+
+[tool.ruff]
+line-length = 99
+src = ["prediccion_pasajeros_anac"]
+
+[tool.ruff.lint]
+extend-select = ["I"]
