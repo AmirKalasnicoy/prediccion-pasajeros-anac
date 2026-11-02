@@ -35,7 +35,7 @@ https://datos.transporte.gob.ar/dataset/aterrizajes-y-despegues-procesados-por-l
 
 La variable objetivo del proyecto es `Pasajeros`, ya que se busca estimar la cantidad de pasajeros transportados en una operación correspondiente a un vuelo regular de cabotaje.
 
-La predicción se fija para realizarse **24 horas antes de la salida del vuelo**, por lo que solamente deberían utilizarse como predictoras aquellas variables cuya información esté disponible con esa anticipación.
+Para esta primera versión se toma como referencia una predicción **24 horas antes de la salida del vuelo**. Esta anticipación es una decisión de alcance del proyecto y no implica que la fuente confirme la disponibilidad de todas las variables originales en ese momento.
 
 ## Preparación de los datos
 
@@ -146,7 +146,7 @@ Las tres aerolíneas con más operaciones son `AEROLINEAS ARGENTINAS SA`, `JETSM
 
 ## Selección inicial de variables y momento de predicción
 
-El momento de predicción se fija en **24 horas antes de la salida del vuelo**.
+Para esta primera versión, el momento de predicción se define como **24 horas antes de la salida del vuelo**. Se trata de un supuesto operativo del proyecto para poder delimitar qué información sería válida como predictor.
 
 El conjunto inicial de predictores queda formado por:
 
@@ -199,7 +199,7 @@ El dataset preparado quedó formado por **132.838 registros y 7 columnas**:
 
 Una observación del conjunto preparado representa un registro de despegue correspondiente a una operación regular de cabotaje publicada por ANAC, luego de aplicar los filtros y eliminar duplicados exactos.
 
-El dataset queda preparado para continuar con la selección definitiva de variables y la posterior generación del modelo de Aprendizaje Automático.
+Con esta preparación queda definida una primera versión de los predictores y una estrategia temporal de evaluación. El modelado y la evaluación de resultados se realizarán en la etapa posterior.
 
 ## Archivos relacionados
 
