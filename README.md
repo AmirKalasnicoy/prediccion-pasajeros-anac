@@ -8,7 +8,7 @@ Para trabajar el problema se utilizan datos públicos de movimientos aéreos reg
 
 La idea es analizar si características como el aeropuerto de salida, el destino y la aerolínea pueden aportar información útil para estimar la cantidad de pasajeros transportados.
 
-La predicción se plantea **24 horas antes de la salida del vuelo**, por lo que solamente se deberían utilizar como predictoras aquellas variables cuya información esté disponible con esa anticipación.
+Para esta primera versión se toma como referencia una predicción **24 horas antes de la salida del vuelo**. Esta anticipación es una decisión de alcance del proyecto, por lo que solamente se consideran predictoras aquellas variables cuya disponibilidad previa resulte razonable o pueda verificarse.
 
 ## Objetivo
 
