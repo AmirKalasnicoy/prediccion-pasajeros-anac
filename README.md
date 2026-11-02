@@ -8,7 +8,7 @@ Para trabajar el problema se utilizan datos públicos de movimientos aéreos reg
 
 La idea es analizar si características como el aeropuerto de salida, el destino y la aerolínea pueden aportar información útil para estimar la cantidad de pasajeros transportados.
 
-La predicción se plantea para realizarse antes de la salida del vuelo, por lo que solamente se deberían utilizar como predictoras aquellas variables cuya información esté disponible en ese momento.
+La predicción se plantea **24 horas antes de la salida del vuelo**, por lo que solamente se deberían utilizar como predictoras aquellas variables cuya información esté disponible con esa anticipación.
 
 ## Objetivo
 
@@ -91,9 +91,9 @@ Finalmente, después de eliminar 8 registros duplicados exactos, el dataset prep
 | `Aeronave` | `str` |
 | `Pasajeros` | `float64` |
 
-### Variables consideradas como posibles predictoras
+### Conjunto inicial de predictores
 
-Por el momento, las variables que se consideran más claras para usar como predictoras son:
+Para la primera versión del modelo se utilizarán:
 
 - `Aeropuerto`
 - `Origen / Destino`
@@ -101,9 +101,7 @@ Por el momento, las variables que se consideran más claras para usar como predi
 
 ### Variables que todavía necesitan revisión
 
-`Fecha UTC` y `Hora UTC` se mantienen en el dataset, pero todavía no se consideran confirmadas como predictoras porque la fuente no aclara si corresponden al horario programado o al momento efectivo en que ocurrió la operación.
-
-`Aeronave` también se mantiene en el conjunto preparado, aunque todavía falta confirmar si esta información estaría disponible antes de la salida del vuelo.
+`Fecha UTC` se conserva para ordenar los registros y organizar la evaluación temporal, pero no se incorpora como predictor en esta primera versión. `Hora UTC` y `Aeronave` también quedan fuera por ahora, porque todavía no se pudo confirmar con suficiente claridad si representan información disponible 24 horas antes de la salida.
 
 ### Variable descartada por fuga de información
 
@@ -121,6 +119,24 @@ También se eliminaron las siguientes columnas después de los filtros:
 - `Calidad dato`
 
 Estas variables quedaron con un único valor y dejaron de aportar información para una futura predicción.
+
+
+## Revisión adicional del conjunto preparado
+
+La variable objetivo `Pasajeros` tiene una media de **129,79**, una mediana de **140**, un mínimo de **0** y un máximo de **284** pasajeros. Hay **1.824 registros con cero pasajeros (1,37 %)**, no aparecen valores negativos ni fraccionarios y se identificaron **3 casos** por encima del límite superior calculado con el criterio de 1,5 veces el rango intercuartílico. Estos registros se conservan porque no hay evidencia suficiente para tratarlos como errores.
+
+En los predictores iniciales se encontraron **42 aeropuertos de salida, 66 destinos, 41 aerolíneas y 420 rutas**. También existen categorías con pocos ejemplos, especialmente entre aerolíneas, destinos y rutas. No se agrupan categorías solo porque sus nombres sean parecidos.
+
+## Preparación para la evaluación
+
+`Fecha UTC` se convierte a tipo temporal dentro de la notebook y confirma una cobertura desde el **1 de enero hasta el 31 de diciembre de 2025**.
+
+Como el objetivo es estimar pasajeros de vuelos futuros, la evaluación se plantea de forma temporal:
+
+- **Desarrollo:** enero a octubre de 2025 — 109.954 registros.
+- **Prueba final:** noviembre y diciembre de 2025 — 22.884 registros.
+
+Las variables categóricas se preparan con **One-Hot Encoding**. El codificador se ajusta solamente con el conjunto de desarrollo y se configura con `handle_unknown="ignore"` para poder procesar categorías que aparezcan por primera vez en el período de prueba. En esta etapa no se entrena ningún modelo.
 
 ## Modelos considerados
 
@@ -173,6 +189,24 @@ La estructura del repositorio sigue la organización de **Cookiecutter Data Scie
 - **Dependencias del proyecto:** `requirements.txt`
 - **Configuración del proyecto:** `pyproject.toml`
 
+
+## Cómo reproducir la preparación
+
+Desde la raíz del repositorio:
+
+```bash
+python -m pip install -r requirements.txt
+```
+
+Después, entrar a la carpeta `notebooks` y abrir la notebook desde ahí:
+
+```bash
+cd notebooks
+jupyter notebook preparacion_datos_anac_2025.ipynb
+```
+
+Las rutas utilizadas dentro de la notebook son relativas a esa carpeta.
+
 ## Fuente de los datos
 
 Los datos provienen del portal de Datos Abiertos de la Secretaría de Transporte de la Nación y fueron publicados por la Administración Nacional de Aviación Civil (ANAC).
@@ -180,6 +214,8 @@ Los datos provienen del portal de Datos Abiertos de la Secretaría de Transporte
 Dataset utilizado: **Aterrizajes y despegues procesados por la Administración Nacional de Aviación Civil**.
 
 Período utilizado: **2025**.
+
+La fecha exacta de descarga no quedó registrada por separado. El archivo original fue incorporado al repositorio el **28/10/2026**, que es la fecha disponible para documentar esta etapa.
 
 Enlace oficial al dataset:
 
