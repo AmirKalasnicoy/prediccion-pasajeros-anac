@@ -10,11 +10,24 @@ La idea es analizar si características como el aeropuerto de salida, el destino
 
 Para esta primera versión se toma como referencia una predicción **24 horas antes de la salida del vuelo**. Esta anticipación es una decisión de alcance del proyecto, por lo que solamente se consideran predictoras aquellas variables cuya disponibilidad previa resulte razonable o pueda verificarse.
 
-## Objetivo
+## Pregunta del proyecto
+
+¿Es posible predecir la cantidad de pasajeros de una operación correspondiente a un vuelo regular de cabotaje en Argentina a partir del aeropuerto de salida, el destino y la aerolínea, utilizando información disponible 24 horas antes de la salida?
+
+## Objetivo general
 
 Desarrollar un modelo de Aprendizaje Automático capaz de predecir la cantidad de pasajeros de una operación de vuelo regular de cabotaje en Argentina a partir de características disponibles sobre dicha operación.
 
 Una estimación de este tipo podría servir como apoyo para la planificación de recursos aeroportuarios, por ejemplo personal, controles, equipaje o infraestructura necesaria para atender una operación.
+
+## Objetivos específicos
+
+- Analizar y preparar los registros correspondientes a vuelos regulares de cabotaje durante 2025.
+- Analizar cómo se registran los despegues y aterrizajes para construir una observación consistente por operación dentro del alcance del proyecto.
+- Estudiar la distribución de la cantidad de pasajeros y su variación según el aeropuerto de salida, el destino y la aerolínea.
+- Seleccionar y preparar variables predictoras que puedan estar disponibles al momento de la predicción, evitando posibles casos de fuga de información.
+- Entrenar y evaluar modelos de regresión utilizando una estrategia temporal que permita simular la predicción sobre vuelos futuros.
+- Comparar el desempeño de los modelos utilizados y seleccionar la alternativa que mejor se adapte al problema planteado.
 
 ## Tipo de problema
 
@@ -145,6 +158,16 @@ Como modelo inicial se plantea utilizar **Regresión Lineal Múltiple**.
 También se podrá comparar su desempeño con otro modelo de regresión, como un **Árbol de Decisión para Regresión**, para ver si existen relaciones que no puedan representarse bien con un modelo lineal.
 
 La elección definitiva del modelo se realizará más adelante, en la etapa de modelado y evaluación.
+
+Durante la evaluación se utilizará como una de las métricas principales el **Error Absoluto Medio (MAE)**, ya que permite expresar el error promedio del modelo directamente en pasajeros por operación. Las métricas definitivas y sus resultados se documentarán en la etapa de modelado.
+
+## Alcance y limitaciones
+
+- El proyecto utiliza registros correspondientes únicamente al año **2025**, por lo que la evaluación se realiza dentro de ese período y no permite asegurar el mismo desempeño en otros años.
+- La predicción se plantea **24 horas antes de la salida** como una decisión de alcance del proyecto. La fuente no confirma de manera explícita la disponibilidad previa de todas las variables originales con esa anticipación.
+- Por este motivo, `Hora UTC` y `Aeronave` no se utilizan como predictoras en la primera versión del modelo. `Fecha UTC` se conserva para organizar la evaluación temporal, pero tampoco se utiliza como entrada del modelo.
+- El dataset no incluye un identificador único de vuelo. Los duplicados eliminados corresponden a registros exactamente iguales en todas las columnas disponibles, pero no es posible verificar cada operación de forma independiente.
+- La variable objetivo representa **pasajeros transportados por operación**, no la demanda total de personas interesadas en viajar. La cantidad transportada también puede estar condicionada por la capacidad disponible de la aeronave.
 
 ## Estructura del repositorio
 
