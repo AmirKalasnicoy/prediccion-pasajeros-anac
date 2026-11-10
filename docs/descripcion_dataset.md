@@ -35,7 +35,7 @@ https://datos.transporte.gob.ar/dataset/aterrizajes-y-despegues-procesados-por-l
 
 La variable objetivo del proyecto es `Pasajeros`, ya que se busca estimar la cantidad de pasajeros transportados en una operación correspondiente a un vuelo regular de cabotaje.
 
-Para esta primera versión se toma como referencia una predicción **24 horas antes de la salida del vuelo**. Esta anticipación es una decisión de alcance del proyecto y no implica que la fuente confirme la disponibilidad de todas las variables originales en ese momento.
+La predicción se plantea **24 horas antes de la salida del vuelo**. Esta anticipación es una decisión de alcance del proyecto y no implica que la fuente confirme la disponibilidad de todas las variables originales en ese momento.
 
 ## Preparación de los datos
 
@@ -122,9 +122,9 @@ La fuente oficial define `Pasajeros` como la cantidad de pasajeros de una operac
 
 Con el criterio de 1,5 veces el rango intercuartílico, el límite superior es 268,5 pasajeros y aparecen **3 registros** por encima de ese valor: 269, 271 y 284 pasajeros. Se mantienen identificados para revisión, pero no se eliminan solamente por ser valores extremos.
 
-## Análisis de los predictores iniciales
+## Análisis de los predictores
 
-La primera versión del proyecto utiliza `Aeropuerto`, `Origen / Destino` y `Aerolinea Nombre`.
+El modelo utiliza `Aeropuerto`, `Origen / Destino` y `Aerolinea Nombre` como variables predictoras.
 
 | Elemento | Cantidad |
 |---|---:|
@@ -140,46 +140,48 @@ También hay categorías poco frecuentes:
 - 32 aerolíneas tienen menos de 10 registros.
 - 183 rutas tienen menos de 10 operaciones y 99 aparecen una sola vez.
 
-No se encontraron espacios al inicio o al final ni variantes que se diferencien únicamente por mayúsculas y minúsculas en los tres predictores iniciales. Por ahora no se agrupan categorías solamente porque sus nombres sean parecidos.
+No se encontraron espacios al inicio o al final ni variantes que se diferencien únicamente por mayúsculas y minúsculas en los tres predictores. Tampoco se agruparon categorías solamente porque sus nombres fueran parecidos.
 
 Las tres aerolíneas con más operaciones son `AEROLINEAS ARGENTINAS SA`, `JETSMART AIRLINES S.A.` y `FB LÍNEAS AÉREAS - FLYBONDI`, que juntas concentran aproximadamente el 98,54 % de los registros. La notebook incluye además la comparación de pasajeros entre las aerolíneas y rutas con más operaciones.
 
-## Selección inicial de variables y momento de predicción
+## Selección de variables y momento de predicción
 
-Para esta primera versión, el momento de predicción se define como **24 horas antes de la salida del vuelo**. Se trata de un supuesto operativo del proyecto para poder delimitar qué información sería válida como predictor.
+El momento de predicción se define como **24 horas antes de la salida del vuelo**. Se trata de un supuesto operativo del proyecto que permite delimitar qué información sería válida como predictor.
 
-El conjunto inicial de predictores queda formado por:
+Las variables utilizadas por el modelo son:
 
 - `Aeropuerto`.
 - `Origen / Destino`.
 - `Aerolinea Nombre`.
 
-`Fecha UTC` se usa para ordenar los registros y organizar la evaluación temporal, pero no se incorpora como predictor. `Hora UTC` y `Aeronave` quedan fuera de esta primera versión hasta poder confirmar mejor su disponibilidad con la anticipación definida.
+`Fecha UTC` se utiliza para ordenar los registros y organizar la evaluación temporal, pero no se incorpora como predictor. `Hora UTC` y `Aeronave` tampoco se utilizan porque no se pudo confirmar con suficiente claridad su disponibilidad 24 horas antes de la salida.
 
 ## Preparación de categorías y evaluación temporal
 
-Dentro de la notebook, `Fecha UTC` se convierte a tipo temporal y se comprobó que el conjunto cubre desde el **01/01/2025** hasta el **31/12/2025**.
+Dentro de las notebooks, `Fecha UTC` se convierte a tipo temporal y se comprobó que el conjunto cubre desde el **01/01/2025** hasta el **31/12/2025**.
 
-Como se busca estimar pasajeros de vuelos futuros, se define una separación temporal:
+Como el objetivo es estimar pasajeros de operaciones futuras, la evaluación se organiza respetando el orden temporal:
 
-- **Desarrollo:** enero a octubre de 2025, con 109.954 registros.
+- **Entrenamiento:** enero a agosto de 2025.
+- **Validación:** septiembre y octubre de 2025.
 - **Prueba final:** noviembre y diciembre de 2025, con 22.884 registros.
 
-Los tres predictores iniciales se preparan con `OneHotEncoder(handle_unknown="ignore")`. El codificador se ajusta únicamente con el conjunto de desarrollo y luego se aplica al período de prueba. De esta forma, las categorías nuevas no obligan a volver a ajustar el preprocesamiento con información del test.
+Las variables categóricas se preparan con `OneHotEncoder(handle_unknown="ignore")`. Durante la comparación de modelos, el codificador se ajusta solamente con los datos de entrenamiento y luego se aplica al conjunto de validación. El conjunto de prueba se mantiene apartado hasta la evaluación final.
 
-Después de la codificación, el conjunto de desarrollo tiene 139 columnas. En el período de prueba aparecen 7 destinos y 3 aerolíneas que no estaban en el período de desarrollo, lo que confirma la utilidad de contemplar categorías desconocidas.
+Después de elegir el modelo y su profundidad, los datos de enero a octubre se vuelven a utilizar juntos como conjunto de desarrollo, con **109.954 registros**. El codificador se ajusta nuevamente con ese período completo y se aplica a noviembre y diciembre. De esta forma, la preparación del test se hace sin utilizar información del propio conjunto de prueba.
 
-No se entrena ningún modelo en esta etapa.
+En la preparación final, tanto desarrollo como prueba quedan representados con **139 columnas** después de la codificación.
 
 ## Reproducibilidad
 
 Las dependencias están listadas en `requirements.txt`.
 
-Para reproducir la preparación:
+Para reproducir el proyecto:
 
 1. Desde la raíz del repositorio, ejecutar `python -m pip install -r requirements.txt`.
 2. Entrar a la carpeta `notebooks`.
-3. Ejecutar `jupyter notebook preparacion_datos_anac_2025.ipynb`.
+3. Ejecutar primero `jupyter notebook preparacion_datos_anac_2025.ipynb`.
+4. Luego ejecutar `jupyter notebook modelado_anac_2025.ipynb`.
 
 Las rutas de lectura y escritura son relativas a la carpeta `notebooks`.
 
@@ -199,10 +201,11 @@ El dataset preparado quedó formado por **132.838 registros y 7 columnas**:
 
 Una observación del conjunto preparado representa un registro de despegue correspondiente a una operación regular de cabotaje publicada por ANAC, luego de aplicar los filtros y eliminar duplicados exactos.
 
-Con esta preparación queda definida una primera versión de los predictores y una estrategia temporal de evaluación. El modelado y la evaluación de resultados se realizarán en la etapa posterior.
+Este conjunto preparado es el que se utiliza en la notebook de modelado. Allí se comparan los modelos, se selecciona la profundidad del Árbol de Decisión y se realiza la evaluación final sobre los datos de noviembre y diciembre.
 
 ## Archivos relacionados
 
 - Dataset original: `data/raw/informe-ministerio-actualizado-dic-final.csv`
 - Dataset procesado: `data/processed/vuelos_regulares_cabotaje_2025_procesado.csv`
 - Notebook de preparación: `notebooks/preparacion_datos_anac_2025.ipynb`
+- Notebook de modelado y evaluación: `notebooks/modelado_anac_2025.ipynb`
