@@ -51,13 +51,13 @@ Luego de seleccionar los despegues quedaron **132.846 registros**.
 
 ## Registros duplicados
 
-Sobre el conjunto ya filtrado se detectaron 8 registros duplicados.
+Después de aplicar los filtros se encontraron **8 registros duplicados**.
 
-Después de revisar estos casos se observó que las filas aparecían repetidas con exactamente los mismos valores en todas las columnas disponibles.
+Al revisarlos, se vio que las filas tenían exactamente los mismos valores en todas las columnas.
 
-Como el dataset no cuenta con un identificador único de vuelo, no es posible verificar cada caso de forma independiente. Sin embargo, al tratarse de registros completamente iguales dentro del conjunto ya filtrado, se eliminó una de las copias de cada caso.
+Como el dataset no tiene un identificador único para cada vuelo, no se puede comprobar cada caso por separado. De todas formas, al ser registros completamente iguales dentro del conjunto ya filtrado, se decidió eliminar una de las copias.
 
-Luego de este tratamiento quedaron **132.838 registros**.
+Después de eliminar estos duplicados quedaron **132.838 registros**.
 
 ## Revisión de PAX
 
