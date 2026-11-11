@@ -6,7 +6,7 @@ Este proyecto busca predecir la cantidad de pasajeros de una operación correspo
 
 Se utilizan datos públicos de movimientos aéreos registrados por la Administración Nacional de Aviación Civil (ANAC) durante 2025. La predicción se plantea **24 horas antes de la salida del vuelo** y se utilizan como variables de entrada el aeropuerto de salida, el destino y la aerolínea.
 
-La idea es evaluar cuánto pueden aportar estas características para estimar la cantidad de pasajeros transportados antes de que ocurra la operación.
+La idea es ver cuánto ayudan estas características a estimar la cantidad de pasajeros antes de que ocurra la operación.
 
 ## Pregunta del proyecto
 
@@ -14,7 +14,7 @@ La idea es evaluar cuánto pueden aportar estas características para estimar la
 
 ## Objetivo general
 
-Desarrollar un modelo de Aprendizaje Automático capaz de predecir la cantidad de pasajeros de una operación de vuelo regular de cabotaje en Argentina a partir de características disponibles sobre dicha operación.
+Desarrollar un modelo de Aprendizaje Automático que pueda predecir la cantidad de pasajeros de un vuelo regular de cabotaje en Argentina usando información disponible sobre esa operación.
 
 Una estimación así podría ayudar a planificar recursos aeroportuarios, por ejemplo personal, controles, equipaje o infraestructura necesaria para atender una operación.
 
@@ -30,7 +30,7 @@ La variable objetivo es `Pasajeros`.
 |---|---|
 | ¿Qué representa cada fila? | Un registro de despegue correspondiente a una operación regular de cabotaje |
 | ¿Qué se predice? | La cantidad de pasajeros transportados |
-| ¿Cuándo se hace la predicción? | 24 horas antes de la salida, como supuesto de alcance del proyecto |
+| ¿Cuándo se hace la predicción? | 24 horas antes de la salida, como supuesto del proyecto |
 | ¿Con qué información? | Aeropuerto de salida, destino y aerolínea |
 | ¿Para qué puede servir? | Como apoyo para planificar recursos asociados a la operación |
 | ¿Cómo produce la predicción el modelo final? | El Árbol de Decisión sigue una serie de divisiones hasta llegar a una hoja y devuelve una estimación de pasajeros |
@@ -61,7 +61,7 @@ Durante la preparación se comprobó que, en el conjunto utilizado:
 
 `PAX = Pasajeros / 2`
 
-Por este motivo, `PAX` fue eliminada. Utilizarla como entrada permitiría conocer de forma indirecta la variable objetivo y generaría fuga de información.
+Por eso se eliminó `PAX`. Usarla como entrada le daría al modelo información directa sobre la variable que queremos predecir y generaría fuga de información.
 
 ## Análisis exploratorio
 
@@ -80,13 +80,13 @@ El análisis exploratorio completo, junto con la preparación de los datos, se e
 
 ## Estrategia de evaluación
 
-Como se trabaja con registros históricos y el objetivo es estimar operaciones futuras, la división se realizó respetando el orden temporal.
+Como los datos son históricos y queremos estimar operaciones futuras, la división se hizo respetando el orden temporal.
 
 - **Entrenamiento:** enero a agosto de 2025
 - **Validación:** septiembre y octubre de 2025
 - **Prueba final:** noviembre y diciembre de 2025
 
-El conjunto de validación se utilizó para comparar modelos y elegir la profundidad del Árbol de Decisión. El conjunto de prueba se mantuvo apartado hasta la evaluación final.
+El conjunto de validación se usó para comparar modelos y elegir la profundidad del Árbol de Decisión. El conjunto de prueba se dejó aparte hasta la evaluación final.
 
 Las variables categóricas se transformaron con **One-Hot Encoding**. El codificador se ajustó solamente con los datos de entrenamiento y después se reutilizó sobre los períodos posteriores.
 
@@ -145,7 +145,7 @@ Este ejemplo muestra cómo utilizar `.predict()` con una nueva operación. No se
 
 Los resultados muestran que el aeropuerto de salida, el destino y la aerolínea contienen información útil para estimar la cantidad de pasajeros de una operación.
 
-Entre los modelos comparados, el Árbol de Decisión obtuvo el mejor desempeño en validación y mantuvo resultados similares al evaluarse con datos posteriores.
+Entre los modelos comparados, el Árbol de Decisión obtuvo el mejor resultado en validación y mantuvo un comportamiento parecido al evaluarse con datos posteriores.
 
 Aun así, el modelo no explica toda la variación observada y existen operaciones en las que la diferencia entre el valor real y el predicho es considerable.
 
@@ -158,7 +158,7 @@ Aun así, el modelo no explica toda la variación observada y existen operacione
 - El dataset no incluye un identificador único de vuelo.
 - El modelo utiliza solamente tres variables predictoras, por lo que distintas operaciones con las mismas características pueden recibir estimaciones parecidas.
 
-Como trabajo futuro se podrían incorporar nuevas variables que estén realmente disponibles antes de la salida y evaluar el modelo sobre otros períodos o años.
+Más adelante se podrían incorporar nuevas variables que estén disponibles antes de la salida y probar el modelo con otros períodos o años.
 
 ## Documentación y orden de lectura
 
