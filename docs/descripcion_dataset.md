@@ -96,12 +96,12 @@ Después de aplicar los filtros, algunas columnas quedaron con un único valor:
 - `Tipo de Movimiento`: Despegue.
 - `Calidad dato`: DEFINITIVO.
 
-Como estas variables ya no presentan variación y no aportarían información para una futura predicción, fueron eliminadas del dataset preparado.
+Como estas variables tienen el mismo valor en todos los registros, ya no aportan información útil para el modelo y se eliminaron del dataset preparado.
 
 
 ## Análisis de la variable objetivo
 
-En el conjunto final, `Pasajeros` presenta los siguientes valores:
+En el conjunto final, `Pasajeros` tiene los siguientes valores:
 
 | Medida | Valor |
 |---|---:|
@@ -116,11 +116,11 @@ En el conjunto final, `Pasajeros` presenta los siguientes valores:
 | Percentil 99 | 231 |
 | Máximo | 284 |
 
-Se encontraron **1.824 operaciones con 0 pasajeros (1,37 %)**. No hay valores negativos ni fraccionarios.
+Se encontraron **1.824 operaciones con 0 pasajeros (1,37 %)**. No aparecen valores negativos ni fraccionarios.
 
-La fuente oficial define `Pasajeros` como la cantidad de pasajeros de una operación individual y no indica que 0 sea un código de dato faltante. Los ceros aparecen además en distintas aerolíneas y rutas. Por este motivo se conservan y no se eliminan automáticamente.
+Como la fuente no indica que el valor 0 represente un dato faltante, estos casos se conservaron. Además, aparecen en distintas aerolíneas y rutas, por lo que no había una razón clara para eliminarlos.
 
-Con el criterio de 1,5 veces el rango intercuartílico, el límite superior es 268,5 pasajeros y aparecen **3 registros** por encima de ese valor: 269, 271 y 284 pasajeros. Se mantienen identificados para revisión, pero no se eliminan solamente por ser valores extremos.
+También se revisaron los valores extremos. Con el criterio de 1,5 veces el rango intercuartílico aparecen solo **3 registros** por encima del límite superior de 268,5 pasajeros: 269, 271 y 284. Se dejaron en el dataset porque no había evidencia suficiente para considerarlos errores.
 
 ## Análisis de los predictores
 
