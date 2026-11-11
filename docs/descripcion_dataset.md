@@ -33,19 +33,19 @@ https://datos.transporte.gob.ar/dataset/aterrizajes-y-despegues-procesados-por-l
 
 ## Variable objetivo
 
-La variable objetivo del proyecto es `Pasajeros`, ya que se busca estimar la cantidad de pasajeros transportados en una operación correspondiente a un vuelo regular de cabotaje.
+La variable objetivo del proyecto es `Pasajeros`, porque queremos estimar cuántos pasajeros transporta una operación de vuelo regular de cabotaje.
 
-La predicción se plantea **24 horas antes de la salida del vuelo**. Esta anticipación es una decisión de alcance del proyecto y no implica que la fuente confirme la disponibilidad de todas las variables originales en ese momento.
+La predicción se plantea **24 horas antes de la salida del vuelo**. Tomar ese momento es una decisión del proyecto y no significa que la fuente confirme que todas las variables originales estén disponibles 24 horas antes.
 
 ## Preparación de los datos
 
-Como el proyecto está enfocado en vuelos regulares de cabotaje, se seleccionaron únicamente los registros cuya clase de vuelo es `Regular` y cuya clasificación es `Doméstico`.
+Como el proyecto trabaja con vuelos regulares de cabotaje, se seleccionaron solo los registros cuya clase de vuelo es `Regular` y cuya clasificación es `Doméstico`.
 
 Después de este filtro quedaron **265.624 registros**.
 
-También se revisó la forma en la que ANAC registra los movimientos. Para los vuelos de cabotaje aparecen registros de despegue y aterrizaje, por lo que mantener ambos podría representar dos veces una misma operación.
+También se revisó cómo ANAC registra los movimientos. En los vuelos de cabotaje aparecen registros de despegue y aterrizaje, por lo que mantener ambos podría hacer que una misma operación aparezca dos veces.
 
-Por este motivo, se decidió trabajar únicamente con los registros correspondientes a `Despegue`. De esta forma, `Aeropuerto` puede interpretarse como el aeropuerto de salida y `Origen / Destino` como el aeropuerto de destino.
+Por eso se decidió trabajar solamente con los registros de `Despegue`. Así, `Aeropuerto` representa el aeropuerto de salida y `Origen / Destino` el aeropuerto de destino.
 
 Luego de seleccionar los despegues quedaron **132.846 registros**.
 
@@ -67,25 +67,25 @@ En los 132.838 registros del conjunto preparado se comprobó que:
 
 `PAX = Pasajeros / 2`
 
-Como `Pasajeros` es la variable objetivo, utilizar `PAX` como entrada del modelo generaría fuga de información, ya que contiene un valor calculado directamente a partir de la variable que se busca predecir.
+Como `Pasajeros` es la variable que queremos predecir, usar `PAX` como entrada generaría fuga de información porque contiene un valor calculado directamente a partir de ella.
 
-Por este motivo, `PAX` fue eliminada del conjunto preparado.
+Por eso se eliminó `PAX` del conjunto preparado.
 
 ## Revisión de Aeronave
 
 La variable `Aeronave` contiene códigos correspondientes al fabricante y modelo de avión utilizado en la operación.
 
-También se encontraron registros con el valor `0`. La documentación consultada no permite determinar con precisión qué representa ese valor.
+También se encontraron registros con el valor `0`, pero la documentación no deja claro qué significa ese valor.
 
-Además, todavía no se pudo confirmar si la aeronave registrada corresponde a información disponible antes de la salida del vuelo. Por este motivo, la variable se mantiene en el dataset, pero no se considera confirmada como predictora.
+Además, no se pudo confirmar si la aeronave registrada es información disponible antes de la salida del vuelo. Por eso la variable se mantiene en el dataset, pero no se usa como predictora.
 
 ## Revisión de Fecha UTC y Hora UTC
 
 Las variables `Fecha UTC` y `Hora UTC` indican la fecha y hora de la operación en horario UTC.
 
-Sin embargo, la fuente no aclara si corresponden al horario programado o al momento efectivo en que ocurrió el movimiento.
+La fuente no aclara si corresponden al horario programado o al horario real en que ocurrió el movimiento.
 
-Como la predicción se plantea antes de la salida del vuelo, esta diferencia es importante. Por este motivo, ambas variables se mantienen en el dataset, aunque todavía no se consideran confirmadas como predictoras.
+Como la predicción se hace antes de la salida, esa diferencia es importante. Por eso ambas variables se mantienen en el dataset, pero no se usan como predictoras.
 
 ## Variables eliminadas después de los filtros
 
@@ -140,13 +140,13 @@ También hay categorías poco frecuentes:
 - 32 aerolíneas tienen menos de 10 registros.
 - 183 rutas tienen menos de 10 operaciones y 99 aparecen una sola vez.
 
-No se encontraron espacios al inicio o al final ni variantes que se diferencien únicamente por mayúsculas y minúsculas en los tres predictores. Tampoco se agruparon categorías solamente porque sus nombres fueran parecidos.
+No se encontraron espacios sobrantes ni diferencias que fueran solamente de mayúsculas y minúsculas en los tres predictores. Tampoco se agruparon categorías solo porque sus nombres fueran parecidos.
 
 Las tres aerolíneas con más operaciones son `AEROLINEAS ARGENTINAS SA`, `JETSMART AIRLINES S.A.` y `FB LÍNEAS AÉREAS - FLYBONDI`, que juntas concentran aproximadamente el 98,54 % de los registros. La notebook incluye además la comparación de pasajeros entre las aerolíneas y rutas con más operaciones.
 
 ## Selección de variables y momento de predicción
 
-El momento de predicción se define como **24 horas antes de la salida del vuelo**. Se trata de un supuesto operativo del proyecto que permite delimitar qué información sería válida como predictor.
+El momento de predicción se define como **24 horas antes de la salida del vuelo**. Es un supuesto del proyecto que sirve para decidir qué información puede usarse como predictora.
 
 Las variables utilizadas por el modelo son:
 
@@ -154,11 +154,11 @@ Las variables utilizadas por el modelo son:
 - `Origen / Destino`.
 - `Aerolinea Nombre`.
 
-`Fecha UTC` se utiliza para ordenar los registros y organizar la evaluación temporal, pero no se incorpora como predictor. `Hora UTC` y `Aeronave` tampoco se utilizan porque no se pudo confirmar con suficiente claridad su disponibilidad 24 horas antes de la salida.
+`Fecha UTC` se usa para ordenar los registros y organizar la evaluación temporal, pero no entra al modelo como predictora. `Hora UTC` y `Aeronave` tampoco se usan porque no se pudo confirmar que estén disponibles 24 horas antes de la salida.
 
 ## Preparación de categorías y evaluación temporal
 
-Dentro de las notebooks, `Fecha UTC` se convierte a tipo temporal y se comprobó que el conjunto cubre desde el **01/01/2025** hasta el **31/12/2025**.
+Dentro de las notebooks, `Fecha UTC` se convierte a tipo temporal y se revisa que los datos cubran desde el **01/01/2025** hasta el **31/12/2025**.
 
 Como el objetivo es estimar pasajeros de operaciones futuras, la evaluación se organiza respetando el orden temporal:
 
@@ -166,9 +166,9 @@ Como el objetivo es estimar pasajeros de operaciones futuras, la evaluación se 
 - **Validación:** septiembre y octubre de 2025.
 - **Prueba final:** noviembre y diciembre de 2025, con 22.884 registros.
 
-Las variables categóricas se preparan con `OneHotEncoder(handle_unknown="ignore")`. Durante la comparación de modelos, el codificador se ajusta solamente con los datos de entrenamiento y luego se aplica al conjunto de validación. El conjunto de prueba se mantiene apartado hasta la evaluación final.
+Las variables categóricas se preparan con `OneHotEncoder(handle_unknown="ignore")`. Durante la comparación de modelos, el codificador se ajusta solamente con entrenamiento y después se aplica a validación. El conjunto de prueba se deja aparte hasta la evaluación final.
 
-Después de elegir el modelo y su profundidad, los datos de enero a octubre se vuelven a utilizar juntos como conjunto de desarrollo, con **109.954 registros**. El codificador se ajusta nuevamente con ese período completo y se aplica a noviembre y diciembre. De esta forma, la preparación del test se hace sin utilizar información del propio conjunto de prueba.
+Después de elegir el modelo y su profundidad, se juntan los datos de enero a octubre, con **109.954 registros**. El codificador se vuelve a ajustar con ese período completo y después se aplica a noviembre y diciembre. Así, la preparación del test no usa información del propio conjunto de prueba.
 
 En la preparación final, tanto desarrollo como prueba quedan representados con **139 columnas** después de la codificación.
 
@@ -199,9 +199,9 @@ El dataset preparado quedó formado por **132.838 registros y 7 columnas**:
 | `Aeronave` | `str` |
 | `Pasajeros` | `float64` |
 
-Una observación del conjunto preparado representa un registro de despegue correspondiente a una operación regular de cabotaje publicada por ANAC, luego de aplicar los filtros y eliminar duplicados exactos.
+Cada observación del conjunto preparado representa un despegue de una operación regular de cabotaje publicada por ANAC, después de aplicar los filtros y eliminar los duplicados exactos.
 
-Este conjunto preparado es el que se utiliza en la notebook de modelado. Allí se comparan los modelos, se selecciona la profundidad del Árbol de Decisión y se realiza la evaluación final sobre los datos de noviembre y diciembre.
+Este conjunto preparado es el que se usa en la notebook de modelado. Ahí se comparan los modelos, se elige la profundidad del Árbol de Decisión y se hace la evaluación final con los datos de noviembre y diciembre.
 
 ## Archivos relacionados
 
