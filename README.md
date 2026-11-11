@@ -16,11 +16,11 @@ La idea es evaluar cuánto pueden aportar estas características para estimar la
 
 Desarrollar un modelo de Aprendizaje Automático capaz de predecir la cantidad de pasajeros de una operación de vuelo regular de cabotaje en Argentina a partir de características disponibles sobre dicha operación.
 
-Una estimación de este tipo podría servir como apoyo para la planificación de recursos aeroportuarios, por ejemplo personal, controles, equipaje o infraestructura necesaria para atender una operación.
+Una estimación así podría ayudar a planificar recursos aeroportuarios, por ejemplo personal, controles, equipaje o infraestructura necesaria para atender una operación.
 
 ## Tipo de problema
 
-El proyecto corresponde a un problema de **Aprendizaje Supervisado de Regresión**, ya que la variable que se quiere predecir es numérica.
+Se trata de un problema de **Aprendizaje Supervisado de Regresión**, porque la variable que se quiere predecir es numérica.
 
 La variable objetivo es `Pasajeros`.
 
@@ -88,7 +88,7 @@ Como se trabaja con registros históricos y el objetivo es estimar operaciones f
 
 El conjunto de validación se utilizó para comparar modelos y elegir la profundidad del Árbol de Decisión. El conjunto de prueba se mantuvo apartado hasta la evaluación final.
 
-Las variables categóricas se transformaron mediante **One-Hot Encoding**. El codificador se ajustó únicamente con los datos correspondientes al entrenamiento y luego se reutilizó sobre los períodos posteriores.
+Las variables categóricas se transformaron con **One-Hot Encoding**. El codificador se ajustó solamente con los datos de entrenamiento y después se reutilizó sobre los períodos posteriores.
 
 ## Modelos comparados
 
@@ -152,7 +152,7 @@ Aun así, el modelo no explica toda la variación observada y existen operacione
 ## Limitaciones y posibles mejoras
 
 - El proyecto utiliza únicamente datos correspondientes a **2025**.
-- La predicción 24 horas antes de la salida se utiliza como un supuesto de alcance del proyecto. La fuente no confirma de forma explícita la disponibilidad previa de todas las variables originales con esa anticipación.
+- La predicción 24 horas antes de la salida se toma como un supuesto del proyecto. La fuente no confirma de forma explícita que todas las variables originales estén disponibles con esa anticipación.
 - `Hora UTC` y `Aeronave` no se utilizan como predictoras porque no se pudo confirmar su disponibilidad 24 horas antes.
 - La variable objetivo representa **pasajeros transportados por operación**, no la demanda total de personas interesadas en viajar.
 - El dataset no incluye un identificador único de vuelo.
