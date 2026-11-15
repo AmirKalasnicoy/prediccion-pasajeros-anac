@@ -8,6 +8,14 @@ Se utilizan datos públicos de movimientos aéreos registrados por la Administra
 
 La idea es ver cuánto ayudan estas características a estimar la cantidad de pasajeros antes de que ocurra la operación.
 
+## Video de presentación
+
+El video explicativo del proyecto se encuentra disponible en YouTube:
+
+[Ver video de presentación](https://youtu.be/9EVsFLaqe0k)
+
+El video incluye subtítulos.
+
 ## Pregunta del proyecto
 
 ¿Es posible predecir la cantidad de pasajeros de una operación correspondiente a un vuelo regular de cabotaje en Argentina a partir del aeropuerto de salida, el destino y la aerolínea, utilizando información disponible 24 horas antes de la salida?
