@@ -26,6 +26,14 @@ Desarrollar un modelo de Aprendizaje Automático que pueda predecir la cantidad 
 
 Una estimación así podría ayudar a planificar recursos aeroportuarios, por ejemplo personal, controles, equipaje o infraestructura necesaria para atender una operación.
 
+## Objetivos específicos
+
+- Analizar y preparar los registros de vuelos regulares de cabotaje correspondientes a 2025.
+- Seleccionar variables útiles para la predicción, evitando posibles casos de fuga de información.
+- Entrenar y comparar modelos de regresión para estimar la cantidad de pasajeros.
+- Evaluar el desempeño de los modelos mediante MAE, MSE, R² y análisis de residuos.
+- Seleccionar el modelo con mejor desempeño y mostrar cómo realizar una nueva predicción.
+
 ## Tipo de problema
 
 Se trata de un problema de **Aprendizaje Supervisado de Regresión**, porque la variable que se quiere predecir es numérica.
